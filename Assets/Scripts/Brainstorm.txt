@@ -1,0 +1,38 @@
+Brainstorm :
+
+
+ERSCHAFFE MEHR CHeckpoint everytime u die.
+Checkpopints in second world not working
+FIX LOCKING SYSTEM !PRIORITY!
+aFTER 9TH LEVEL ERROR -> GO TO LOBBY
+
+kleine collectable icons von ananas und banana z.B.
+
+Feder -> change gravity scale of rb player to fall slower
+Multiple Jumps(wings) isGrounded CHeck for Player.Jumpage counter einpflegen
+movement speed
+Slow ramp movement (Change from axisraw to axis)
+Wall slide slower in Player.FixedUpdate the *0.2f controlls this
+Currently you gain one extra jump when on wall, meaning no other extra jumps will 
+	be registered (in Player.FixedUpdate), This could be set higher resulting in more
+	jumps after walljump or even be set to extra jumps so that everytime you wallslide
+	you get the amount of extra jumps you have.
+
+	Keymapping system
+
+	Bowserfeld?
+	Kampfsystem?
+
+
+Arrows k nnten auch on ground noch schaden machen. in check hit der stuck check
+
+
+- Rogue 
+Steuerrung vom dashjump auf eigene Taste (shift)
+Eigene positionierte Mapelemtnte die auf bestimmten richtungen connecten
+Character specific move buffs -> frogg double jump. Affe an einer wand maximal hoch
+bei rechts dr cken
+horzintal axis musnt be 0 at walljump
+
+Standing onto wall and then Jumping is gettin canceled by walljump and thats Cancer
+Walljump at one wall SHOULD be possible but only slidable not higher then u were before
