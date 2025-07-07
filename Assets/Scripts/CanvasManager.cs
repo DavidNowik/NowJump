@@ -87,16 +87,14 @@ public class CanvasManager : MonoBehaviour
 
         if (died)
         {
+            GameManager.instance.levelChangingFlag = false;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             int deaths = PlayerPrefs.GetInt("Deaths");
             PlayerPrefs.SetInt("Deaths", deaths + 1);
             deathsText.text = "Deaths: " + (deaths + 1);
             isResetting = true;
             
-        } else
-        {
-            GameManager.instance.checkPoint = null;
-        }
+        } 
     }
     public void ResetAfterSceneLoad()
     {
@@ -107,6 +105,8 @@ public class CanvasManager : MonoBehaviour
     }
     public void IncreaseStars()
     {
+        int allStars = PlayerPrefs.GetInt("Stars");
+        PlayerPrefs.SetInt("Stars", allStars + 1);
         string currentLevel = GetCurrentLevelString();
         stars++;
         starText.text = "Stars: "+stars;
@@ -116,22 +116,23 @@ public class CanvasManager : MonoBehaviour
         string currentLevel = GetCurrentLevelString();
         if (stars <= 3)
         {
-            Debug.Log(" VSVSVSSVSV Level" + currentLevel + "Stars");
             PlayerPrefs.SetInt("Level" + currentLevel + "Stars", stars);
-            Debug.Log("Colleceted "+stars+" Stars in Level "+ currentLevel);
         }
         levelText.text = "Level: " + currentLevel;
     }
     public void GoToLevel(string level)
     {
-        SceneManager.LoadScene("Level" + level);
-    }
-    public void PrepareLevelChange()
-    {
-        GameManager.instance.checkPoint = null;
-        foreach (Transform child in GameManager.instance.transform)
+        if (level.StartsWith("Level"))
         {
-            Destroy(child.gameObject);
+            GameManager.instance.levelChangingFlag = true;
+            PlayerPrefs.SetInt("cp", -1);
+            SceneManager.LoadScene(level);
+        }
+        else
+        {
+            GameManager.instance.levelChangingFlag = true;
+            PlayerPrefs.SetInt("cp", -1);
+            SceneManager.LoadScene("Level" + level);
         }
     }
     public static string GetCurrentLevelString()

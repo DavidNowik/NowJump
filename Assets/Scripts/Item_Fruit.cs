@@ -6,9 +6,14 @@ public class Item_Fruit : MonoBehaviour
     [SerializeField] private float power = 1f;
     private void Awake()
     {
-        if (name.StartsWith("Banane"))
+        if (name.CompareTo("Banana") == 0)
         {
             if (PlayerPrefs.GetInt("WallJump") > 0)
+                gameObject.SetActive(false);
+        }
+        if (name.CompareTo("Pineapple") == 0)
+        {
+            if (PlayerPrefs.GetInt("DashJump") > 0)
                 gameObject.SetActive(false);
         }
     }
@@ -42,12 +47,10 @@ public class Item_Fruit : MonoBehaviour
             {
                 PlayerPrefs.SetInt("WallJump", 1);
                 player.CheckPrefs();
-                Debug.Log("Activate WallJump");
             }
             if (name.StartsWith("Star"))
             {
                 GameManager.instance.canvasManager.IncreaseStars();
-                Debug.Log("Collect Star");
                 if (transform.childCount > 0)
                 {
                     Transform particleTransform = transform.GetChild(0);

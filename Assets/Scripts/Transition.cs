@@ -14,19 +14,6 @@ public class Transition : MonoBehaviour
     {
         travelToString = CanvasManager.GetCurrentLevelString();
     }
-    public void CheckLock()
-    {
-        Debug.Log("Compare "+ PlayerPrefs.GetInt(travelOverride[0] + "_level")+" to "+ travelOverride[travelOverride.Length - 1]);
-        int finishedLevelPlusTwo = PlayerPrefs.GetInt(travelOverride[0] + "_level")+2;
-        int targetLevel = travelOverride[travelOverride.Length - 1] - '0';
-
-        if (finishedLevelPlusTwo <= targetLevel && travelOverride[travelOverride.Length - 1] != '1')
-        {
-            Debug.Log("Lock Portal: " + travelOverride);
-            transform.GetChild(0).gameObject.SetActive(true);
-        }
-
-    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Player>() != null)
@@ -51,10 +38,12 @@ public class Transition : MonoBehaviour
                     travelToString = CanvasManager.GetCurrentLevelString();
                 }
                 char lastChar = travelToString[travelToString.Length - 1];
+                string world_ = travelToString.Substring(0, travelToString.Length - 1);
 
                 if (lastChar == '9')
                 {
                     travelToString = "9_9";
+                    PlayerPrefs.SetInt(world_ + "level", 9);
                 }
                 else
                 {
@@ -62,18 +51,20 @@ public class Transition : MonoBehaviour
                     travelToString = travelToString.Substring(0, travelToString.Length - 1) + incrementedChar;
                 }
 
-                string world_ = travelToString.Substring(0, travelToString.Length - 1);
 
                 if (lastChar - '0' > PlayerPrefs.GetInt(world_ + "level"))
                 {
-                    Debug.Log("Saving prefs: " + world_ + "level" + " as " + (world_ + lastChar));
+                    Debug.Log("Saving prefs: " + world_ + "level" + " as " + (lastChar - '0'));
                     PlayerPrefs.SetInt(world_ + "level", lastChar - '0');
                 }
+                else
+                {
+                    Debug.Log("Current last level (" + lastChar +
+                        ") was lower then or equal to your highest " + PlayerPrefs.GetInt(world_ + "level"));
+                }
 
-                GameManager.instance.canvasManager.PrepareLevelChange();//Deletes all Checkpoints
                 GameManager.instance.canvasManager.NextLevel();
-
-                SceneManager.LoadScene("Level" + travelToString.ToString());
+                GameManager.instance.canvasManager.GoToLevel("Level" + travelToString.ToString());
                 GameManager.instance.canvasManager.Reset(false);
             }
         }

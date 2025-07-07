@@ -7,11 +7,14 @@ public class GameManager : MonoBehaviour
     public static GameManager instance { get; private set; }
 
     public CanvasManager canvasManager;
+    public CheckPointManager checkPointManager;
     public GameObject canvasPrefab;
     public Player player;
     public GameObject textArray;
-    public Transform checkPoint;
     [SerializeField] private GameObject dropTextPrefab;
+
+    [HideInInspector]
+    public bool levelChangingFlag;
 
 
     private void Awake()
@@ -25,6 +28,8 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
         instance = this;
+        levelChangingFlag = true;
+        PlayerPrefs.SetInt("cp", -1);
     }
     private void Update()
     {
@@ -32,7 +37,6 @@ public class GameManager : MonoBehaviour
         MakeSureOfPlayer();
         if (Input.GetKeyDown(KeyCode.I))
         {
-            canvasManager.PrepareLevelChange();
             canvasManager.GoToLevel("9_9");
         }
     }

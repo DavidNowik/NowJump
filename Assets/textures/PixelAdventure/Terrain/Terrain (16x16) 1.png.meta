@@ -3323,7 +3323,7 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3344,7 +3344,7 @@ TextureImporter:
         width: 48
         height: 48
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -3352,6 +3352,48 @@ TextureImporter:
       bones: []
       spriteID: dc5860afe93d21d44b5e0be5bbd97ee7
       internalID: -1792645112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zTerrain (16x16) 1_152
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78f4a0e90498d1045bc9ebbbb2354e82
+      internalID: -2084021943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: zzSlippery
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c2e431162357534c8efe1a3cc0657cb
+      internalID: -225510143
       vertices: []
       indices: 
       edges: []
@@ -3521,6 +3563,8 @@ TextureImporter:
       Terrain (16x16) 1_99: 1449566435
       xx_StoneFull: 655939601
       xx_WoodFull: -1792645112
+      zTerrain (16x16) 1_152: -2084021943
+      zzSlippery: -225510143
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

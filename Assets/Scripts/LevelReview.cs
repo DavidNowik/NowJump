@@ -24,7 +24,6 @@ public class LevelReview : MonoBehaviour
 
         transform.GetChild(5).GetComponent<Transition>().travelOverride = 
             worldDisplayed + "_" + levelDisplayed;
-        transform.GetChild(5).GetComponent<Transition>().CheckLock();
         // Turn off all animations initially
         starDisplay1.GetComponent<Animator>().SetBool("isActive", false);
         starDisplay2.GetComponent<Animator>().SetBool("isActive", false);
@@ -35,7 +34,6 @@ public class LevelReview : MonoBehaviour
     {
         // Start staggered animation based on how many stars player has earned
         int stars = PlayerPrefs.GetInt("Level" + worldDisplayed +"_"+ levelDisplayed + "Stars");
-        Debug.Log("DIsplay nuim,ber of stars: " + stars);
         StartCoroutine(ActivateStars(stars));
     }
     private IEnumerator ActivateStars(int stars)

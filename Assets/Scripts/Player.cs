@@ -35,6 +35,9 @@ public class Player : MonoBehaviour
     private float activeSpeedBuff = 0f;
     private float activeJumpBuff = 0f;
 
+    private float jumpCooldown = 0.2f;
+    private float lastJumpTime = -Mathf.Infinity;
+
     private float movingInput;
     private float lastWallJumpX = Mathf.Infinity;
 
@@ -48,14 +51,11 @@ public class Player : MonoBehaviour
     [HideInInspector]
     public int facingDirection = 1;
     private bool isMoving;
-    private float maxFallSpeed = -20f;
+    private float maxFallSpeed = -80f;
 
     public void Awake()
     {
         CheckPrefs();
-        if(GameManager.instance != null)
-        if (GameManager.instance.checkPoint != null)
-            transform.localPosition = GameManager.instance.checkPoint.position;
     }
 
     public void CheckPrefs()
@@ -114,32 +114,38 @@ public class Player : MonoBehaviour
 
     private void HandleJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        
+        if (Input.GetKeyDown(KeyCode.Space) && Time.time >= lastJumpTime + jumpCooldown)
         {
             CameraMotor.lookAround = false;
+
             if (isWallSliding)
             {
                 WallJump();
             }
-            else if(coyoteTimeCounter > 0f && Input.GetAxisRaw("Vertical") < -0.1f && canDashJump)
+            else if (coyoteTimeCounter > 0f && Input.GetAxisRaw("Vertical") < -0.1f && canDashJump)
             {
                 Instantiate(dustPrefab, transform.position, Quaternion.identity);
                 rb.velocity = new Vector2(facingDirection * 50, GetTotalJumpForce() / 2); // DashJump
                 coyoteTimeCounter = 0f;
+                lastJumpTime = Time.time;
             }
             else if (coyoteTimeCounter > 0f)
             {
                 Instantiate(dustPrefab, transform.position, Quaternion.identity);
                 rb.velocity = new Vector2(rb.velocity.x, GetTotalJumpForce());
                 coyoteTimeCounter = 0f;
+                lastJumpTime = Time.time;
             }
             else if (jumpsLeft > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, GetTotalJumpForce());
                 jumpsLeft--;
+                lastJumpTime = Time.time;
             }
         }
     }
+
 
     private void CollisionCheck()
     {
