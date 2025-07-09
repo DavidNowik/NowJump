@@ -35,7 +35,7 @@ public class CameraMotor : MonoBehaviour
             Vector3 camToPlayer = newPosition - lookAt.position;
 
             // Clamp the camera's distance to the max distance
-            camToPlayer = Vector3.ClampMagnitude(camToPlayer, 35);
+            camToPlayer = Vector3.ClampMagnitude(camToPlayer, 44);
 
             // Apply the clamped position to the camera while keeping the Z-axis at -10
 

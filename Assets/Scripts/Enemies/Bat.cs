@@ -34,7 +34,7 @@ public class Bat : MonoBehaviour
     }
     private void Awake()
     {
-        collisionDisabledUntil = 1f;
+        collisionDisabledUntil = moveSpeed / 10f;
         if (flipOnAwake) Flip();
     }
 

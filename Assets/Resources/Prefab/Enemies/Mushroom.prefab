@@ -130,10 +130,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bd1d26d80b77b4cb50764851e4932d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthbar: {fileID: 0}
   moveSpeed: 4
   idleTime: 2
-  groundCheckDistance: 0.05
+  groundCheckDistance: 0.15
   wallCheckDistance: 0.2
   whatIsGround:
     serializedVersion: 2

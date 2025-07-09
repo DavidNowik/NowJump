@@ -101,7 +101,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 1
-  m_Mass: 1.1576778
+  m_Mass: 1.2708539
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -148,8 +148,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.031316757, y: 0.09472799}
-  m_Size: {x: 0.9367256, y: 1.4369001}
+  m_Offset: {x: 0.031316757, y: 0.034317493}
+  m_Size: {x: 0.9367256, y: 1.5577211}
   m_Direction: 0
 --- !u!114 &4923770054494368793
 MonoBehaviour:
@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d60bb76666fd6c94cbada3196662bad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  flipOnAwake: 0
   moveSpeed: 5
   idleTime: 3
   ceilingCheckRadius: 0.2
