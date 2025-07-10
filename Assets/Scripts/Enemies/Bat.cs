@@ -105,15 +105,21 @@ public class Bat : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Coll " + collision.collider);
         if (collision.gameObject.GetComponent<Player>() != null)
         {
             Debug.Log("touched Bat");
             GameManager.instance.canvasManager.Reset(true);
         }
-
         if (collision.gameObject.tag == "Block")
         {
             Debug.Log("Bat hit by Block");
+            Destroy(GetComponent<CapsuleCollider2D>());
+            anim.SetTrigger("die");
+        }
+        if (collision.gameObject.tag == "Bullet")
+        {
+            Debug.Log("Bat hit by Bullet");
             Destroy(GetComponent<CapsuleCollider2D>());
             anim.SetTrigger("die");
         }

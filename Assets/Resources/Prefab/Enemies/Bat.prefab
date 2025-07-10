@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8452008033237304843}
   - component: {fileID: 4923770054494368793}
   - component: {fileID: 6066846250761579478}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Bat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,7 +111,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -201,7 +201,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8662161395200670318}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: CeilingCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

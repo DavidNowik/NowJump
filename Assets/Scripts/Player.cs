@@ -122,6 +122,7 @@ public class Player : MonoBehaviour
             if (isWallSliding)
             {
                 WallJump();
+                lastJumpTime = Time.time;
             }
             else if (coyoteTimeCounter > 0f && Input.GetAxisRaw("Vertical") < -0.1f && canDashJump)
             {
@@ -159,6 +160,7 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = new Vector2(0, 0);
                 rb.AddForce(new Vector2(rb.velocity.x, jumpForce * t.force), ForceMode2D.Impulse);
+                t.GetComponent<Animator>().SetTrigger("launch");
             }
         }
 
