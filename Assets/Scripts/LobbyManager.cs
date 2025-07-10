@@ -32,19 +32,36 @@ public class LobbyManager : MonoBehaviour
         {
             LockLevelW3(i);
         }
-        int allStars = PlayerPrefs.GetInt("Stars");
+        int allStars = Mathf.Max(PlayerPrefs.GetInt("Stars"), AllStars());
+
         lock2Text.text = allStars + "/15";
         lock3Text.text = allStars + "/30";
+
         if (allStars >= 15)
         {
-            world2Lock.GetComponent<ActivatableObject>().isActive = false;
-            lock2Text.text = "15/15!";
+            world2Lock.SetActive(false);
         }
         if (allStars >= 30)
         {
-            world3Lock.GetComponent<ActivatableObject>().isActive = false;
-            lock3Text.text = "30/30!";
+            world3Lock.SetActive(false);
         }
+    }
+    private int AllStars()
+    {
+        int summe = 0;
+        foreach (LevelReview lr in world1)
+        {
+            summe += lr.getStarAmount();
+        }
+        foreach (LevelReview lr in world2)
+        {
+            summe += lr.getStarAmount();
+        }
+        foreach (LevelReview lr in world3)
+        {
+            summe += lr.getStarAmount();
+        }
+        return summe;
     }
     public void LockLevelW1(int level)
     {

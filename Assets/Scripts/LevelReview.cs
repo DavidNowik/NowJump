@@ -36,6 +36,10 @@ public class LevelReview : MonoBehaviour
         int stars = PlayerPrefs.GetInt("Level" + worldDisplayed +"_"+ levelDisplayed + "Stars");
         StartCoroutine(ActivateStars(stars));
     }
+    public int getStarAmount()
+    {
+        return PlayerPrefs.GetInt("Level" + worldDisplayed + "_" + levelDisplayed + "Stars");
+    }
     private IEnumerator ActivateStars(int stars)
     {
         if (stars >= 1)
