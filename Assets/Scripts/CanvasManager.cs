@@ -105,8 +105,6 @@ public class CanvasManager : MonoBehaviour
     }
     public void IncreaseStars()
     {
-        int allStars = PlayerPrefs.GetInt("Stars");
-        PlayerPrefs.SetInt("Stars", allStars + 1);
         string currentLevel = GetCurrentLevelString();
         stars++;
         starText.text = "Stars: "+stars;

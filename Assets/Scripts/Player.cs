@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private int extraJumps;
     [SerializeField] private Vector2 wallJumpDirection;
-    [HideInInspector]public bool onScoutPlatform;
+    [HideInInspector] public bool onScoutPlatform;
 
     [Header("Jump Buffer & Coyote Time")]
     [SerializeField] private float coyoteTime = 0.07f;
@@ -28,8 +28,7 @@ public class Player : MonoBehaviour
     public Rigidbody2D rb;
     public GameObject dustPrefab;
 
-    [HideInInspector]
-    public bool carryingEquipment = false;
+    [HideInInspector] public bool carryingEquipment = false;
     private int jumpsLeft;
     private float coyoteTimeCounter;
     private float activeSpeedBuff = 0f;
@@ -48,10 +47,13 @@ public class Player : MonoBehaviour
     private bool isGrounded;
     private bool isWallDetected;
     private bool facingRight = true;
-    [HideInInspector]
-    public int facingDirection = 1;
+    [HideInInspector] public int facingDirection = 1;
     private bool isMoving;
     private float maxFallSpeed = -80f;
+
+    // Flip lock variables
+    private float wallJumpFlipLockDuration = 0.5f;
+    private float wallJumpFlipLockEndTime = -Mathf.Infinity;
 
     public void Awake()
     {
@@ -65,7 +67,7 @@ public class Player : MonoBehaviour
             canWallSlide = true;
             canWallJump = true;
         }
-        if(PlayerPrefs.GetInt("DashJump") == 1)
+        if (PlayerPrefs.GetInt("DashJump") == 1)
         {
             canDashJump = true;
         }
@@ -79,7 +81,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        CollisionCheck();//HAS to be here
+        CollisionCheck(); // HAS to be here
         HandleWallSlide();
         HandleAnimations();
         CapFallSpeed();
@@ -88,33 +90,36 @@ public class Player : MonoBehaviour
     private void HandleMovement()
     {
         if (isWallSliding) return;
-        if (isGrounded && CameraMotor.lookAround) { 
+        if (isGrounded && CameraMotor.lookAround)
+        {
             rb.velocity = new Vector2(0, rb.velocity.y);
             isMoving = false;
             return;
         }
-
 
         CameraMotor.lookAround = false;
         movingInput = Input.GetAxisRaw("Horizontal");
         float targetSpeed = movingInput * (speed + activeSpeedBuff);
         float lerpFactor = isGrounded ? 15f : 6f;
         float smoothSpeed = Mathf.Lerp(rb.velocity.x, targetSpeed, Time.deltaTime * lerpFactor);
-       
-        if(movingInput != 0)
+
+        if (movingInput != 0)
             rb.velocity = new Vector2(smoothSpeed, rb.velocity.y);
-        else if(isGrounded)
+        else if (isGrounded)
             rb.velocity = new Vector2(smoothSpeed, rb.velocity.y);
 
         isMoving = Mathf.Abs(movingInput) > 0.01f;
 
-        if (movingInput > 0 && !facingRight) Flip();
-        else if (movingInput < 0 && facingRight) Flip();
+        // Prevent flipping for a short time after wall jump
+        if (Time.time >= wallJumpFlipLockEndTime)
+        {
+            if (movingInput > 0 && !facingRight) Flip();
+            else if (movingInput < 0 && facingRight) Flip();
+        }
     }
 
     private void HandleJump()
     {
-        
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= lastJumpTime + jumpCooldown)
         {
             CameraMotor.lookAround = false;
@@ -147,7 +152,6 @@ public class Player : MonoBehaviour
         }
     }
 
-
     private void CollisionCheck()
     {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
@@ -158,7 +162,7 @@ public class Player : MonoBehaviour
             Trampoline t = trampoline.GetComponent<Trampoline>();
             if (t)
             {
-                rb.velocity = new Vector2(0, 0);
+                rb.velocity = Vector2.zero;
                 rb.AddForce(new Vector2(rb.velocity.x, jumpForce * t.force), ForceMode2D.Impulse);
                 t.GetComponent<Animator>().SetTrigger("launch");
             }
@@ -185,7 +189,9 @@ public class Player : MonoBehaviour
         else if (isWallDetected && canWallSlide && !isGrounded && rb.velocity.y < 5f)
         {
             isWallSliding = true;
-            if(Input.GetAxis("Vertical") > -0.1f)
+
+            rb.velocity = new Vector2(0, rb.velocity.y);
+            if (Input.GetAxis("Vertical") > -0.1f)
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.4f);
             else
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.9f);
@@ -218,6 +224,7 @@ public class Player : MonoBehaviour
         lastWallJumpX = transform.position.x;
         canWallJump = false;
         Flip();
+        wallJumpFlipLockEndTime = Time.time + wallJumpFlipLockDuration; // Set flip lock time
     }
 
     private void Flip()
@@ -245,6 +252,7 @@ public class Player : MonoBehaviour
     {
         activeJumpBuff = Mathf.Min(activeJumpBuff + amount, maxJumpBuff);
     }
+
     public void IncreaseJumpCount(int amount)
     {
         extraJumps += amount;
@@ -255,10 +263,11 @@ public class Player : MonoBehaviour
     {
         activeJumpBuff -= amount;
     }
+
     public void DecreaseJumpCount(int amount)
     {
         extraJumps -= amount;
-        if(extraJumps < 0) extraJumps = 0;
+        if (extraJumps < 0) extraJumps = 0;
     }
 
     public float GetTotalJumpForce()
@@ -272,6 +281,7 @@ public class Player : MonoBehaviour
 
         return total;
     }
+
     public int GetJumpCount()
     {
         return 1 + extraJumps;

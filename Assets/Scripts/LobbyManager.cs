@@ -9,6 +9,8 @@ public class LobbyManager : MonoBehaviour
     public LevelReview[] world2 = new LevelReview[9];
     public LevelReview[] world3 = new LevelReview[9];
 
+    public TextMesh allStarsText;
+
     public GameObject world2Lock;
     public TextMesh lock2Text; 
     public GameObject world3Lock;
@@ -32,10 +34,11 @@ public class LobbyManager : MonoBehaviour
         {
             LockLevelW3(i);
         }
-        int allStars = Mathf.Max(PlayerPrefs.GetInt("Stars"), AllStars());
+        int allStars = AllStars();
 
         lock2Text.text = allStars + "/15";
         lock3Text.text = allStars + "/30";
+        allStarsText.text ="all possible stars:\n" +allStars + "/90";
 
         if (allStars >= 15)
         {
