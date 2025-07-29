@@ -164,6 +164,7 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = Vector2.zero;
                 rb.AddForce(new Vector2(rb.velocity.x, jumpForce * t.force), ForceMode2D.Impulse);
+                if(t.GetComponent<Animator>() != null)
                 t.GetComponent<Animator>().SetTrigger("launch");
             }
         }
