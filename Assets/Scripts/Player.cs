@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
         {
             canDashJump = true;
         }
+        speed = 12;
     }
 
     private void Update()
