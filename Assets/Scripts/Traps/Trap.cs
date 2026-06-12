@@ -11,7 +11,7 @@ public abstract class Trap : ActivatableObject
         if (collision.GetComponent<Player>() != null)
         {
             Debug.Log("Killed by "+name);
-            GameManager.instance.canvasManager.Reset(true);
+            //GameManager.instance.canvasManager.Reset(true); TODO die
         }
     }
 }

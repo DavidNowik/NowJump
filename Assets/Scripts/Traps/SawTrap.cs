@@ -140,7 +140,7 @@ public class SawTrap : Trap
     {
         if (collision.gameObject.GetComponent<Player>() != null && isActive)
         {
-            GameManager.instance.canvasManager.Reset(true);
+            //GameManager.instance.canvasManager.Reset(true); TODO die
         }
     }
 }

@@ -1,20 +1,8 @@
-using System;
-using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance { get; private set; }
-
-    public CanvasManager canvasManager;
-    public CheckPointManager checkPointManager;
-    public GameObject canvasPrefab;
-    public Player player;
-    public GameObject textArray;
-    [SerializeField] private GameObject dropTextPrefab;
-
-    [HideInInspector]
-    public bool levelChangingFlag;
 
 
     private void Awake()
@@ -28,101 +16,7 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
         instance = this;
-        levelChangingFlag = true;
-        PlayerPrefs.SetInt("cp", -1);
     }
-    private void Update()
-    {
-        MakeSureOfCanvas();
-        MakeSureOfPlayer();
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            canvasManager.GoToLevel("9_9");
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            canvasManager.ExitGame();
-        }
-
-        // Press the 'P' key to take a screenshot
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            /*
-            string filename = $"Screenshot_{screenshotCount}.png";
-            ScreenCapture.CaptureScreenshot(filename);
-            Debug.Log($"Screenshot saved: {filename}");
-            screenshotCount++;
-            */
-        }
-    }
-    //private int screenshotCount = 0;
-
-    public void MakeSureOfCanvas()
-    {
-        if (canvasPrefab == null)
-        {
-            // Load the prefab from Resources/Prefab/Canvas.prefab
-            canvasPrefab = Resources.Load<GameObject>("Prefab/Canvas");
-            if (canvasPrefab == null)
-            {
-                Debug.LogError("Canvas prefab not found in Resources/Prefab!");
-                return;
-            }
-        }
-
-        if (canvasManager == null)
-        {
-            GameObject canvasGO = GameObject.Find("Canvas");
-            if (canvasGO == null)
-            {
-                canvasGO = Instantiate(canvasPrefab);
-                canvasGO.name = "Canvas"; // Optional: ensure consistent naming
-                canvasManager = canvasGO.GetComponent<CanvasManager>();
-            }
-            else
-            {
-                canvasManager = canvasGO.GetComponent<CanvasManager>();
-            }
-        }
-    }
-    public void MakeSureOfPlayer()
-    {
-        if(player == null)
-        {
-            player = GameObject.Find("Player").GetComponent<Player>();
-        }
-    }
-    public void CreateTextArray(string[] texts)
-    {
-        Vector3 spawnPos = player.transform.position + Vector3.up*4; // 1 unit above
-        Instantiate(textArray, spawnPos, Quaternion.identity)
-            .GetComponent<TextArray>().texts = texts;
-    }
-
-    public void FullReset()
-    {
-        PlayerPrefs.DeleteAll();
-        PlayerPrefs.Save(); // Optional but ensures it's written immediately
-    }
-    public void DropText(string text, int fontSize, Vector3 position)
-    {
-        TMP_Text tmpText = 
-            Instantiate(dropTextPrefab, position, Quaternion.identity)
-            .transform.GetChild(0).GetComponent<TMP_Text>();
-        tmpText.text = text;
-        tmpText.fontSize = fontSize; 
-        tmpText.gameObject.GetComponent<Animator>()
-            .SetBool("DropRight", UnityEngine.Random.value > 0.5f);
-
-    }
-    public void DropText(string text)
-    {
-        DropText(text, 40, Vector3.zero);
-    }
-    public void DropText(string text, Vector2 position)
-    {
-        DropText(text, 40,position);
-    }
-
+   
 
 }
