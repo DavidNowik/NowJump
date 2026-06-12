@@ -147,4 +147,16 @@ public class CanvasManager : MonoBehaviour
             return "0_0";
         }
     }
+    public void ExitGame()
+    {
+        PlayerPrefs.Save();
+        // Works in a built game (not in editor)
+        UnityEngine.Application.Quit();
+
+        // Useful for debugging in the editor
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+    }
+
 }

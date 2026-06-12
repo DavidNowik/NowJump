@@ -39,17 +39,23 @@ public class GameManager : MonoBehaviour
         {
             canvasManager.GoToLevel("9_9");
         }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            canvasManager.ExitGame();
+        }
 
         // Press the 'P' key to take a screenshot
         if (Input.GetKeyDown(KeyCode.P))
         {
+            /*
             string filename = $"Screenshot_{screenshotCount}.png";
             ScreenCapture.CaptureScreenshot(filename);
             Debug.Log($"Screenshot saved: {filename}");
             screenshotCount++;
+            */
         }
     }
-    private int screenshotCount = 0;
+    //private int screenshotCount = 0;
 
     public void MakeSureOfCanvas()
     {
