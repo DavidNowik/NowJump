@@ -1,6 +1,4 @@
-// Trap base class: handles general trap behavior
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public abstract class Trap : ActivatableObject
 {
@@ -8,10 +6,14 @@ public abstract class Trap : ActivatableObject
     {
         if (!isActive) return;
 
+
+
+        Debug.Log($"RespawnManager.Instance: {RespawnManager.Instance}");
+
         if (collision.GetComponent<Player>() != null)
         {
             Debug.Log("Killed by "+name);
-            //GameManager.instance.canvasManager.Reset(true); TODO die
+            RespawnManager.Instance.RespawnPlayer(collision.GetComponent<Player>());
         }
     }
 }

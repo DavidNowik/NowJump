@@ -1,14 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyChicken : MonoBehaviour, IKillable
+public class Chicken : MonoBehaviour, IKillable
 {
     private Rigidbody2D rb;
     private Animator anim;
-
-    public HealthbarWS healthbar;
 
     [Header("Move info")]
     [SerializeField] private float moveSpeed;
@@ -108,9 +103,7 @@ public class EnemyChicken : MonoBehaviour, IKillable
     {
         if (collision.gameObject.GetComponent<Player>() != null)
         {
-            // Print "BGAAHG" when the enemy hits the player
-            Debug.Log("BGAAHG");
-            //GameManager.instance.canvasManager.Reset(true); TODO die
+            RespawnManager.Instance.RespawnPlayer(collision.gameObject.GetComponent<Player>());
         }
     }
 
@@ -143,8 +136,19 @@ public class EnemyChicken : MonoBehaviour, IKillable
         Destroy(gameObject);
     }
 
+
+    private HealthbarWS healthbar;
     public HealthbarWS GetHealthbarWS()
     {
+        if (healthbar == null)
+        {
+            healthbar = GetComponentInChildren<HealthbarWS>(true);
+            if (healthbar == null)
+            {
+                Debug.LogError($"{name} could not find a " +
+                    $"{nameof(HealthbarWS)} in itself or its children.");
+            }
+        }
         return healthbar;
     }
 }

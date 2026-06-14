@@ -48,11 +48,10 @@ public class Arrow : MonoBehaviour, IWeaponPower
     }
     private void CheckHit()
     {
-        // Check if the player is within a small radius behind the enemy
         Collider2D hitCollider = Physics2D.OverlapCircle(peak.position, 0.5f, LayerMask.GetMask("Enemy"));
 
         if (hitCollider != null)
-            if (hitCollider.tag == "Enemy") // Check if player is detected and if the chicken isn't already jumping
+            if (hitCollider.tag == "Enemy")
             {
                 Destroy(coll);
                 if (stuck)

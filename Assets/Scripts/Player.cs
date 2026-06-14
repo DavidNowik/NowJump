@@ -298,7 +298,15 @@ public class Player : MonoBehaviour
     {
         return activeJumpBuff;
     }
+    /// <summary>
+    /// Kills the player and initiates the respawn process.
+    /// </summary>
+    public void Die()
+    {
+        Debug.Log("Player died.");
 
+        RespawnManager.Instance.RespawnPlayer(this);
+    }
     // --------- Animations & Gizmos ---------
     private void HandleAnimations()
     {
