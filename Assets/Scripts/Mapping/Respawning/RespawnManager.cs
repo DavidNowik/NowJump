@@ -30,7 +30,7 @@ public class RespawnManager : MonoBehaviour
     /// Respawns the specified player at the currently active checkpoint.
     /// </summary>
     /// <param name="player">The player to respawn.</param>
-    public void RespawnPlayer(Player player)
+    public void RespawnPlayer(GameObject player)
     {
         if (currentCheckpoint == null)
         {

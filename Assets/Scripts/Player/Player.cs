@@ -59,7 +59,21 @@ public class Player : MonoBehaviour
     {
         CheckPrefs();
     }
-
+    private void AutoAssignChecks()
+    {
+        if(groundCheck != null && wallCheck != null) return;
+        foreach (Transform child in GetComponentsInChildren<Transform>(true))
+        {
+            if (child.name == nameof(groundCheck))
+            {
+                groundCheck = child;
+            }
+            else if (child.name == nameof(wallCheck))
+            {
+                wallCheck = child;
+            }
+        }
+    }
     public void CheckPrefs()
     {
         if (PlayerPrefs.GetInt("WallJump") == 1)
@@ -82,6 +96,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        AutoAssignChecks();
         CollisionCheck(); // HAS to be here
         HandleWallSlide();
         HandleAnimations();
@@ -165,8 +180,8 @@ public class Player : MonoBehaviour
             {
                 rb.velocity = Vector2.zero;
                 rb.AddForce(new Vector2(rb.velocity.x, jumpForce * t.force), ForceMode2D.Impulse);
-                if(t.GetComponent<Animator>() != null)
-                t.GetComponent<Animator>().SetTrigger("launch");
+                if (t.GetComponent<Animator>() != null)
+                    t.GetComponent<Animator>().SetTrigger("launch");
             }
         }
 
@@ -305,7 +320,7 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Player died.");
 
-        RespawnManager.Instance.RespawnPlayer(this);
+        RespawnManager.Instance.RespawnPlayer(gameObject);
     }
     // --------- Animations & Gizmos ---------
     private void HandleAnimations()

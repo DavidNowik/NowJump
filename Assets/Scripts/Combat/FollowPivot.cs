@@ -2,18 +2,18 @@ using UnityEngine;
 
 public class FollowPivot : MonoBehaviour
 {
-    private Player player;
+    private GameObject player;
 
     private void LateUpdate()
     {
         if (player == null)
         {
-            player = FindFirstObjectByType<Player>();
+            //player = FindFirstObjectByType<Player>();
 
             if (player == null)
                 return;
         }
 
-        transform.position = player.transform.position;
+        //transform.position = player.transform.position; TODO
     }
 }

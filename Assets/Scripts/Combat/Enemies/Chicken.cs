@@ -103,7 +103,7 @@ public class Chicken : MonoBehaviour, IKillable
     {
         if (collision.gameObject.GetComponent<Player>() != null)
         {
-            RespawnManager.Instance.RespawnPlayer(collision.gameObject.GetComponent<Player>());
+            RespawnManager.Instance.RespawnPlayer(collision.gameObject);
         }
     }
 

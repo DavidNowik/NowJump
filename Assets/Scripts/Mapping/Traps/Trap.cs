@@ -13,7 +13,7 @@ public abstract class Trap : ActivatableObject
         if (collision.GetComponent<Player>() != null)
         {
             Debug.Log("Killed by "+name);
-            RespawnManager.Instance.RespawnPlayer(collision.GetComponent<Player>());
+            RespawnManager.Instance.RespawnPlayer(collision.gameObject);
         }
     }
 }

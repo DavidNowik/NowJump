@@ -14,9 +14,6 @@ public class WeaponHitbox : MonoBehaviour
     {
         IKillable killable = other.GetComponent<IKillable>();
 
-        Debug.Log($"WeaponHitbox hit {other.gameObject.name}");
-        Debug.Log($"Hurting {killable}");
-
         if (killable == null)
             return;
 
